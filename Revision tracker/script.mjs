@@ -5,7 +5,7 @@
 // You can't open the index.html file using a file:// URL.
 
 import { getUserIds } from "./common.mjs";
-import{getData,addData,clearData} from "./storage.mjs"
+import{getData,addData,clearData} from "yocto-queue/storage.mjs"
 
 //Our Variables 
 const userSelect = document.getElementById("userSelect");
