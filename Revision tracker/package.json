@@ -1,0 +1,15 @@
+{
+  "name": "revision-tracker",
+  "version": "1.0.0",
+  "description": "A spaced repetition tracker project from Code Your Future.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server",
+    "test": "node ./tests/common.test.mjs"
+  },
+  "keywords": ["spaced-repetition", "tracker", "CYF"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {}
+}
