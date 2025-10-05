@@ -11,8 +11,11 @@ import{getData,addData,clearData} from "./storage.mjs"
 const userSelect = document.getElementById("userSelect");
 const agendaList = document.getElementById("agenda")
 const messageDiv = document.getElementById("message")
+const form = document.getElementById("addForm")
+const topicInput = document.getElementById("topic")
+const dateInput = document.getElementById("date")
 
-// Populate dropdown with 5 users//
+// Populate dropdown with 5 users
 
 function populateUserDropdown() {
   const users = getUserIds();//Get user IDs from common.js
@@ -50,14 +53,43 @@ function loadUserAgenda(userID){
   });
 }
 
-/* Event listener for dropdown change */
+// Event listener for dropdown change
 userSelect.addEventListener("change", () => {
   const selectedUser = userSelect.value;
   loadUserAgenda(selectedUser);
 });
+//Event Listener for form submission.
+form.addEventListener("submit",(event)=>{
+  event.preventDefault(); //stop the page from loading so we don't have to load data again from localStorage.
 
+const selectedUser = userSelect.value;
+const topic = topicInput.value.trim();
+const date = dateInput.value;
+//Validate everything is selected.
+if (!selectedUser) {
+    alert("Please select a user.");
+    return;
+  }
+  if (!topic) {
+    alert("Please enter a topic name.");
+    return;
+  }
+  if (!date) {
+    alert("Please select a date.");
+    return;
+  }
+const newTopic = { topic, date }; //creating a new topic object
+addData(selectedUser,[newTopic]); //array containing this single topic object gets appended to agenda for the particular user
+
+//clearing inputs after form submission 
+topicInput.value = "";
+dateInput.valueAsDate = new Date();//set the value as a JS Date object, instead of a string.
+
+loadUserAgenda(selectedUser)
+});
 // Run when the page loads
 window.addEventListener("DOMContentLoaded", () => {
   populateUserDropdown();
   console.log("Dropdown populated!");
+  dateInput.valueAsDate = new Date();
 });
