@@ -5,9 +5,27 @@
 // You can't open the index.html file using a file:// URL.
 
 import { getUserIds } from "./common.mjs";
-import{}
+import{getData,addData,clearData} from "./storage.mjs"
 
-window.onload = function () {
-  const users = getUserIds();
-  document.querySelector("body").innerText = `There are ${users.length} users`;
-};
+
+
+
+ /* Populate dropdown with 5 users*/
+const userSelect = document.getElementById("userSelect");
+function populateUserDropdown() {
+  const users = getUserIds();//Get user IDs from common.js
+  userSelect.innerHTML = '<option value="">-- Select user --</option>'; //keep default option
+
+  // Add one <option> for each user
+  users.forEach((userId) => {
+    const option = document.createElement("option");
+    option.value = userId;
+    option.textContent = `User ${userId}`;
+    userSelect.appendChild(option);
+  });
+}
+// Run when the page loads
+window.addEventListener("DOMContentLoaded", () => {
+  populateUserDropdown();
+  console.log("Dropdown populated!");
+});
