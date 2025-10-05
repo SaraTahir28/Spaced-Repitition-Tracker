@@ -1,0 +1,38 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Spaced Repetition Tracker</title>
+    <script type="module" src="./script.js"></script>
+  </head>
+  <body>
+    <h1>Spaced Repetition Tracker</h1>
+
+    <!-- User selection dropdown-hardcoded -->
+    <label for="userSelect">Select user:</label>
+    <select id="userSelect">
+      <option value="">-- Select user --</option>
+    </select>
+
+    <!-- Form to add a new topic -->
+    <form id="addForm">
+      <h2>Add New Topic</h2>
+
+      <label for="topic">Topic name:</label>
+      <input id="topic" type="text" name="topic" required />
+
+      <label for="date">Start date:</label>
+      <input id="date" type="date" name="date" required />
+
+      <button type="submit">Add Topic</button>
+    </form>
+
+    <!-- Container Message -->
+    <div id="message" aria-live="polite"></div>
+
+    <!--  upcoming revisions list -->
+    <ul id="agenda"></ul>
+  </body>
+</html>
