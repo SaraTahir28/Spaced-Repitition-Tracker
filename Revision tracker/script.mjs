@@ -64,7 +64,8 @@ form.addEventListener("submit",(event)=>{
 
 const selectedUser = userSelect.value;
 const topic = topicInput.value.trim();
-const date = dateInput.value;
+const startDate = dateInput.value;
+
 //Validate everything is selected.
 if (!selectedUser) {
     alert("Please select a user.");
@@ -74,7 +75,7 @@ if (!selectedUser) {
     alert("Please enter a topic name.");
     return;
   }
-  if (!date) {
+  if (!startDate) {
     alert("Please select a date.");
     return;
   }
