@@ -95,6 +95,15 @@ if (!selectedUser) {
   // Reload the agenda for this user
   loadUserAgenda(selectedUser);
 });
+// Clear all users' data
+function resetAllUserData() {
+  const users = getUserIds();
+  users.forEach(userId => clearData(userId));
+}
+document.getElementById("resetDataBtn").addEventListener("click", () => {
+  resetAllUserData();
+  alert("All user data has been cleared!");
+});
 
 // Run when the page loads
 window.addEventListener("DOMContentLoaded", () => {
