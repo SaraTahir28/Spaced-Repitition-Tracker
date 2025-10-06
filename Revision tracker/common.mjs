@@ -7,6 +7,9 @@ export function calculateRevisionDates(startDateStr) {
   // Convert the date string (from input.value) to a Date object
   const startDate = new Date(startDateStr);
 
+  // Today's date (midnight UTC, to ignore time differences)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); //only compare dates, set time to midnight.
   // Define your spaced repetition schedule
   const schedule = [
     { days: 7 },
@@ -38,12 +41,17 @@ export function calculateRevisionDates(startDateStr) {
     // Convert date to "YYYY-MM-DD" string for storage
     const formatted = newDate.toISOString().slice(0, 10);
 
-    revisionDates.push({
-      topic: "", // we’ll fill the topic when calling this function
-      date: formatted,
-    });
+    //Only include dates that are today or in the future
+    const dateOnly = new Date(newDate);
+    dateOnly.setHours(0, 0, 0, 0);
+    if (dateOnly >= today) {
+      revisionDates.push({
+        topic: "",
+        date: formatted,
+      });
+    }
   });
 
   return revisionDates;
 }
-
+    
