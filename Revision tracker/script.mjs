@@ -45,14 +45,15 @@ function loadUserAgenda(userID){
     return;
   }
 
-  // Just display all topics and dates (no filtering for now)
-  userData.forEach(item => {
+  // Sort all agenda items by date (earliest first)
+  const sortedAgenda = userData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  sortedAgenda.forEach(item => {
     const li = document.createElement("li");
-    li.textContent = `${item.topic}, ${item.date}`;
+    li.textContent = `${item.topic}, --- ${item.date}`;
     agendaList.appendChild(li);
   });
 }
-
 // Event listener for dropdown change
 userSelect.addEventListener("change", () => {
   const selectedUser = userSelect.value;
