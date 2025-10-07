@@ -8,8 +8,14 @@
     "start": "live-server",
     "test": "node ./common.test.mjs"
   },
-  "keywords": ["spaced-repetition", "tracker", "CYF"],
+  "keywords": [
+    "spaced-repetition",
+    "tracker",
+    "CYF"
+  ],
   "author": "",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
 }

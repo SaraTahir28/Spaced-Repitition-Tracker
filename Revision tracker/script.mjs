@@ -4,7 +4,7 @@
 // Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
 // You can't open the index.html file using a file:// URL.
 
-import { getUserIds } from "./common.mjs";
+import { getUserIds,calculateRevisionDates } from "./common.mjs";
 import{getData,addData,clearData} from "./storage.mjs"
 
 //Our Variables 
@@ -45,14 +45,15 @@ function loadUserAgenda(userID){
     return;
   }
 
-  // Just display all topics and dates (no filtering for now)
-  userData.forEach(item => {
+  // Sort all agenda items by date (earliest first)
+  const sortedAgenda = userData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  sortedAgenda.forEach(item => {
     const li = document.createElement("li");
-    li.textContent = `${item.topic}, ${item.date}`;
+    li.textContent = `${item.topic}, --- ${item.date}`;
     agendaList.appendChild(li);
   });
 }
-
 // Event listener for dropdown change
 userSelect.addEventListener("change", () => {
   const selectedUser = userSelect.value;
@@ -64,7 +65,8 @@ form.addEventListener("submit",(event)=>{
 
 const selectedUser = userSelect.value;
 const topic = topicInput.value.trim();
-const date = dateInput.value;
+const startDate = dateInput.value;
+
 //Validate everything is selected.
 if (!selectedUser) {
     alert("Please select a user.");
@@ -74,19 +76,36 @@ if (!selectedUser) {
     alert("Please enter a topic name.");
     return;
   }
-  if (!date) {
+  if (!startDate) {
     alert("Please select a date.");
     return;
   }
-const newTopic = { topic, date }; //creating a new topic object
-addData(selectedUser,[newTopic]); //array containing this single topic object gets appended to agenda for the particular user
+// Get revision dates
+  const revisions = calculateRevisionDates(startDate);
 
-//clearing inputs after form submission 
-topicInput.value = "";
-dateInput.valueAsDate = new Date();//set the value as a JS Date object, instead of a string.
+  // Fill in the topic name for each revision
+  revisions.forEach(item => item.topic = topic);
 
-loadUserAgenda(selectedUser)
+  // Store the revisions for this user
+  addData(selectedUser, revisions);
+
+  // Clear form
+  topicInput.value = "";
+  dateInput.valueAsDate = new Date();
+
+  // Reload the agenda for this user
+  loadUserAgenda(selectedUser);
 });
+// Clear all users' data
+function resetAllUserData() {
+  const users = getUserIds();
+  users.forEach(userId => clearData(userId));
+}
+document.getElementById("resetDataBtn").addEventListener("click", () => {
+  resetAllUserData();
+  alert("All user data has been cleared!");
+});
+
 // Run when the page loads
 window.addEventListener("DOMContentLoaded", () => {
   populateUserDropdown();
