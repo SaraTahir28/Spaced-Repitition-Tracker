@@ -91,7 +91,7 @@ if (!selectedUser) {
 
   // Clear form
   topicInput.value = "";
-  dateInput.valueAsDate = new Date();
+  dateInput.valueAsDate = new Date(); //setting the input’s value to today’s date, //(VAD) is a special property of date input. new Date() sets date as an object rather than a string.
 
   // Reload the agenda for this user
   loadUserAgenda(selectedUser);
