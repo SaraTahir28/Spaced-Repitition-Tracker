@@ -4,12 +4,13 @@ export function getUserIds() {
 
 // Spaced Repetition Function 
 export function calculateRevisionDates(startDateStr) {
-  // Convert the date string (from input.value) to a Date object
-  const startDate = new Date(startDateStr);
+  
+  const startDate = new Date(startDateStr); //new Date() gives you the current date and time, according to the user’s computer clock.
 
   // Today's date (midnight UTC, to ignore time differences)
-  const today = new Date();
+  const today = new Date(); 
   today.setHours(0, 0, 0, 0); //only compare dates, set time to midnight.
+
   // Define your spaced repetition schedule
   const schedule = [
     { days: 7 },
