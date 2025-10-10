@@ -7,12 +7,12 @@ export function calculateRevisionDates(startDateStr) {
   
   const startDate = new Date(startDateStr); //new Date() gives you the current date and time, according to the user’s computer clock.
 
-  // Today's date (midnight UTC, to ignore time differences)
+  // Today's date 
   const today = new Date(); 
-  today.setHours(0, 0, 0, 0); //only compare dates, set time to midnight.
+  today.setHours(0, 0, 0, 0); //only compare dates as time is set to midnight.
 
-  // Define your spaced repetition schedule
-  const schedule = [
+  //  spaced repetition schedule- how far in future a revision date should be.
+  const schedule = [      
     { days: 7 },
     { months: 1 },
     { months: 3 },
@@ -22,9 +22,9 @@ export function calculateRevisionDates(startDateStr) {
 
   const revisionDates = [];
 
-  // Loop through each interval and calculate the future date
+  // Loop through each interval(our current object) and calculate the future date
   schedule.forEach((interval) => {
-    const newDate = new Date(startDate); // start from original date
+    const newDate = new Date(startDate); // for each interval create a copy of original date to avoid changing original date
 
     // Add days if specified
     if (interval.days) newDate.setDate(newDate.getDate() + interval.days);

@@ -1,6 +1,3 @@
-// This is a scaffolding file we have provided for you which allows you to manage stored data for your application.
-// It can be loaded into index.html.
-// You should not need to modify it to complete the project.
 
 /**
  * Get data associated with a specific user.
