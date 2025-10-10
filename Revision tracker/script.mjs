@@ -98,6 +98,12 @@ function resetAllUserData() {
 }
 document.getElementById("resetDataBtn").addEventListener("click", () => {
   resetAllUserData();
+
+  // Clear UI
+  agendaList.innerHTML = "";       // clear the agenda list
+  messageDiv.textContent = "";     // clear any messages
+  userSelect.value = "";           // reset dropdown selection
+
   alert("All user data has been cleared!");
 });
 
