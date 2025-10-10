@@ -1,21 +1,9 @@
+// Returns a list of user IDs
 export function getUserIds() {
   return ["1", "2", "3", "4", "5"];
 }
 
 // Spaced Repetition Function (UTC-safe, month overflow fixed)
-export function calculateRevisionDates(startDateStr) {
-  if (!startDateStr) throw new Error("Date is required");
-
-  // Parse input strictly as UTC to avoid timezone issues
-  const [year, month, day] = startDateStr.split("-").map(Number);
-  const startDate = new Date(Date.UTC(year, month - 1, day));
-
-  // Today's date for filtering (UTC midnight)
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
-
-
-  // Spaced Repetition Function (UTC-safe, month overflow fixed)
 export function calculateRevisionDates(startDateStr) {
   if (!startDateStr) throw new Error("Date is required");
 
@@ -76,4 +64,3 @@ export function calculateRevisionDates(startDateStr) {
 
   return revisionDates;
 }
-
