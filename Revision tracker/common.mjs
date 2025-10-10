@@ -2,17 +2,19 @@ export function getUserIds() {
   return ["1", "2", "3", "4", "5"];
 }
 
-// Spaced Repetition Function 
+// Spaced Repetition Function
 export function calculateRevisionDates(startDateStr) {
-  
-  const startDate = new Date(startDateStr); //new Date() gives you the current date and time, according to the user’s computer clock.
+  if (!startDateStr) throw new Error("Date is required");
 
-  // Today's date 
-  const today = new Date(); 
-  today.setHours(0, 0, 0, 0); //only compare dates as time is set to midnight.
+  // Parse input date manually
+  const [year, month, day] = startDateStr.split("-").map(Number);
 
-  //  spaced repetition schedule- how far in future a revision date should be.
-  const schedule = [      
+  // Today's date for filtering
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Spaced repetition schedule
+  const schedule = [
     { days: 7 },
     { months: 1 },
     { months: 3 },
@@ -22,37 +24,33 @@ export function calculateRevisionDates(startDateStr) {
 
   const revisionDates = [];
 
-  // Loop through each interval(our current object) and calculate the future date
+  // Helper to format date as YYYY-MM-DD
+  const formatDate = (date) => date.toISOString().slice(0, 10);
+
   schedule.forEach((interval) => {
-    const newDate = new Date(startDate); // for each interval create a copy of original date to avoid changing original date
+    let newDate;
 
-    // Add days if specified
-    if (interval.days) newDate.setDate(newDate.getDate() + interval.days);
-
-    // Add months if specified
-    if (interval.months) {
-      const day = newDate.getDate();
-      newDate.setMonth(newDate.getMonth() + interval.months);
-      if (newDate.getDate() < day) newDate.setDate(0); // handle month overflow
+    if (interval.days) {
+      // Add days
+      newDate = new Date(Date.UTC(year, month - 1, day + interval.days));
+    } else if (interval.months) {
+      // Add months
+      newDate = new Date(Date.UTC(year, month - 1 + interval.months, day));
+    } else if (interval.years) {
+      // Add years
+      newDate = new Date(Date.UTC(year + interval.years, month - 1, day));
     }
 
-    // Add years if specified
-    if (interval.years) newDate.setFullYear(newDate.getFullYear() + interval.years);
-
-    // Convert date to "YYYY-MM-DD" string for storage
-    const formatted = newDate.toISOString().slice(0, 10);
-
-    //Only include dates that are today or in the future
+    // Only include dates today or in the future
     const dateOnly = new Date(newDate);
     dateOnly.setHours(0, 0, 0, 0);
     if (dateOnly >= today) {
       revisionDates.push({
         topic: "",
-        date: formatted,
+        date: formatDate(newDate),
       });
     }
   });
 
   return revisionDates;
 }
-    
