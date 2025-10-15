@@ -111,5 +111,8 @@ document.getElementById("resetDataBtn").addEventListener("click", () => {
 window.addEventListener("DOMContentLoaded", () => {
   populateUserDropdown();
   console.log("Dropdown populated!");
-  dateInput.valueAsDate = new Date();
+  dateInput.valueAsDate = new Date(); //Set the date picker’s value to today’s date.”
 });
+//valueAsDate is a JavaScript property that belongs to an HTML <input type="date"> element.
+
+//It lets you get or set the value of the input as a JavaScript Date object (not just as text)
