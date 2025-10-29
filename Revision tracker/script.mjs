@@ -2,7 +2,7 @@
 import { getUserIds,calculateRevisionDates } from "./common.mjs";
 import{getData,addData,clearData} from "./storage.mjs"
 
-//Our Variables 
+//grabbing references to elements that already exist in your HTML DOM.
 const userSelect = document.getElementById("userSelect");
 const agendaList = document.getElementById("agenda")
 const messageDiv = document.getElementById("message")
@@ -45,7 +45,7 @@ function loadUserAgenda(userID){
 
   sortedAgenda.forEach(item => {
     const li = document.createElement("li");
-    li.textContent = `${item.topic}, --- ${item.date}`;
+    li.textContent = `${item.topic} - ${item.date}`;
     agendaList.appendChild(li);
   });
 }
@@ -86,25 +86,34 @@ if (!selectedUser) {
 
   // Clear form
   topicInput.value = "";
-  dateInput.valueAsDate = new Date(); //setting the input’s value to today’s date, //(VAD) is a special property of date input. new Date() sets date as an object rather than a string.
+  dateInput.valueAsDate = new Date(); //setting the input’s value to today’s date, //(VAD) sets date as an object rather than a string.
 
   // Reload the agenda for this user
   loadUserAgenda(selectedUser);
 });
 // Clear all users' data
-function resetAllUserData() {
-  const users = getUserIds();
-  users.forEach(userId => clearData(userId));
+function resetUserData() {
+  const selectedUser = userSelect.value
+  clearData(selectedUser)
+  return selectedUser; // return for reuse
 }
+
 document.getElementById("resetDataBtn").addEventListener("click", () => {
-  resetAllUserData();
+  const selectedUser = resetUserData();
 
   // Clear UI
   agendaList.innerHTML = "";       // clear the agenda list
   messageDiv.textContent = "";     // clear any messages
   userSelect.value = "";           // reset dropdown selection
+  //Show a confirmation message
+  const msg = document.createElement("p");
+  msg.textContent = `User-${selectedUser} data has been deleted.`;
+  messageDiv.appendChild(msg);
 
-  alert("All user data has been cleared!");
+// Remove confirmation message and reset UI after 3 seconds
+  setTimeout(() => {
+    msg.remove();
+  }, 5000);
 });
 
 // Run when the page loads
@@ -113,6 +122,3 @@ window.addEventListener("DOMContentLoaded", () => {
   console.log("Dropdown populated!");
   dateInput.valueAsDate = new Date(); //Set the date picker’s value to today’s date.”
 });
-//valueAsDate is a JavaScript property that belongs to an HTML <input type="date"> element.
-
-//It lets you get or set the value of the input as a JavaScript Date object (not just as text)
