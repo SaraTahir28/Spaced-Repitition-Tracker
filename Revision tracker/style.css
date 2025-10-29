@@ -1,0 +1,101 @@
+/* Reset some default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+main {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+select,
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+form h2 {
+  margin-bottom: 15px;
+}
+
+#agenda {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+#message p {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #e0ffe0; /* greenish background for success messages */
+  color: #2a662a;
+}
+
+/* Error messages */
+.error {
+  color: #d8000c;
+  background-color: #ffd2d2;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+button#resetDataBtn {
+  background-color: #f44336;
+  margin-top: 10px;
+}
+
+button#resetDataBtn:hover {
+  background-color: #d32f2f;
+}
+
+ul#agenda li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
