@@ -7,13 +7,15 @@ export function getUserIds() {
 export function calculateRevisionDates(startDateStr) {
   if (!startDateStr) throw new Error("Date is required");
 
-  // Parse input strictly as UTC to avoid timezone issues
+
   const [year, month, day] = startDateStr.split("-").map(Number);
-  const startDate = new Date(Date.UTC(year, month - 1, day));
+
+ //Date.UTC creates a UTC timestamp on(year, month, day)
+  const startDate = new Date(Date.UTC(year, month - 1, day)); //new Date(timestamp)-Creates a Date object from that UTC moment 
 
   // Today's date for filtering (UTC midnight)
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
+  const today = new Date(); //Creates a Date object for today. 
+  today.setUTCHours(0, 0, 0, 0);//sets date object  to midnight UTC.so we only compare dates and not times.
 
   // Spaced repetition schedule
   const schedule = [
@@ -26,23 +28,23 @@ export function calculateRevisionDates(startDateStr) {
 
   const revisionDates = [];
 
-  // Loop through each interval
+  // Loop through each interval in schedules array
   schedule.forEach((interval) => {
-    const newDate = new Date(startDate); // copy original date
+    const newDate = new Date(startDate); // new copy of start date for each interval so we don't change the original start date.
 
     // Add days
     if (interval.days) {
-      newDate.setUTCDate(newDate.getUTCDate() + interval.days);
+      newDate.setUTCDate(newDate.getUTCDate() + interval.days); //getUTCDate() + interval.days- gets the day from the date and adds days to it then setUTCdate updates are newDate date object
     }
 
     // Add months with overflow fix
     if (interval.months) {
-      const originalDay = newDate.getUTCDate();
-      newDate.setUTCMonth(newDate.getUTCMonth() + interval.months);
+      const originalDay = newDate.getUTCDate(); //stores the day of the month, the date started on, gives a number.
+      newDate.setUTCMonth(newDate.getUTCMonth() + interval.months); //JS tries to keep the same day number in the new month.
 
       // Clamp to last day if original day doesn't exist in target month
-      if (newDate.getUTCDate() < originalDay) {
-        newDate.setUTCDate(0); // day 0 → last day of previous month (target month)
+      if (newDate.getUTCDate() < originalDay) { //modified newDate obj after adding months, we get date from it if its overflown to next month, its smaller than original day.
+        newDate.setUTCDate(0); // day 0 in JS mean go to → last day of previous month (target month)
       }
     }
 
